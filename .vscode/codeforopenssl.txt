@@ -1,0 +1,2 @@
+openssl genrsa -aes256 -out localhost.key 2048
+openssl req -days 365 -new -newkey rsa:2048 -key localhost.key -x509 -out localhost.pem

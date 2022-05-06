@@ -1,0 +1,12 @@
+{
+    "liveServer.settings.port": 5501,
+    "liveServer.settings.root": "/",
+    "liveServer.settings.CustomBrowser": "firefox",
+    "liveServer.settings.https": 
+    {
+        "enable": true, //set it true to enable the feature.
+        "cert": "E:\\MicrosoftEngage2022\\https\\localhost.pem", //full path of the certificate
+        "key": "E:\\MicrosoftEngage2022\\https\\localhost.key", //full path of the private key
+        "passphrase": "password"
+    }
+}
