@@ -20,20 +20,40 @@ function startVideo()
 // event listener that listens to the play event of the video 
 video.addEventListener('play', ()=>{
 
-    const canvas = faceapi.createCanvasFromMedia(video)
-    document.body.append(canvas)
-    const displaySize = { width: video.width, height: video.height}
+    const adCanvas = createAdCanvas(); //  Creates the AdCanvas where Smart AR Advertisements will be displayed
+
+    const { canvas, displaySize } = createFaceCanvas(); // Creates and sets the Display Size for the FaceCanvas
+    
     faceapi.matchDimensions(canvas,displaySize)
 
-    var adImage = document.getElementById("ad")
+    // @TODO - Create Smart AR ADs
+    // var adImage = document.getElementById("ad")
+    
+    var adImage // dummy holder
 
     setStartTime()
 
     DetectFaces(adImage, displaySize, canvas);
 })
 
+// Creates and sets the Display Size for the FaceCanvas
+function createFaceCanvas() {
+    const canvas = faceapi.createCanvasFromMedia(video);
+    canvas.id = "faceCanvas";
+    document.getElementById("videoDiv").appendChild(canvas);
+    const displaySize = { width: video.offsetWidth, height: video.offsetHeight };
+    return { canvas, displaySize };
+}
 
-// detects faces
+//  Creates the AdCanvas where Smart AR Advertisements will be displayed
+function createAdCanvas() {
+    adCanvas = document.createElement("CANVAS");
+    adCanvas.id = "adCanvas";
+    document.getElementById("videoDiv").appendChild(adCanvas);
+    return adCanvas
+}
+
+// Detects faces
 function DetectFaces(adImage, displaySize, canvas) 
 {
 
@@ -47,7 +67,7 @@ function DetectFaces(adImage, displaySize, canvas)
             .withAgeAndGender();
 
         endTime = new Date();
-        if (endTime - startTime > 5000) 
+        if (endTime - startTime > 1000) 
         {
             canChange = true;
             setStartTime();
@@ -55,7 +75,7 @@ function DetectFaces(adImage, displaySize, canvas)
 
         if (canChange) 
         {
-            handleEmotion(detections, adImage);
+            //handleEmotion(detections, adImage);
             canChange = false;
         }
 
@@ -64,7 +84,7 @@ function DetectFaces(adImage, displaySize, canvas)
     }, 100);
 }
 
-// draws the detections 
+// Draws the detections 
 function drawDetections(detections, displaySize, canvas) {
     const resizeDetections = faceapi.resizeResults(detections, displaySize);
 
@@ -75,7 +95,7 @@ function drawDetections(detections, displaySize, canvas) {
     faceapi.draw.drawFaceExpressions(canvas, resizeDetections);
 }
 
-// detects emotion and changes picture accordingly
+// Detects emotion and changes picture accordingly
 function handleEmotion(detections, adImage)
 {
     
@@ -96,13 +116,13 @@ function handleEmotion(detections, adImage)
     }
 }
 
-// changes Image
+// Changes Image
 function changeImage(imageLocation, adImage)
 {
     adImage.src = imageLocation
 }
 
-// sets the start time for the timer
+// Sets the start time for the timer
 function setStartTime()
 {
     startTime = new Date()
