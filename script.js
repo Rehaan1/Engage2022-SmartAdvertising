@@ -21,6 +21,7 @@ function startVideo()
 video.addEventListener('play', ()=>{
 
     const adCanvas = createAdCanvas(); //  Creates the AdCanvas where Smart AR Advertisements will be displayed
+    var adCanvasCtx = adCanvas.getContext("2d")
 
     const { canvas, displaySize } = createFaceCanvas(); // Creates and sets the Display Size for the FaceCanvas
     
@@ -29,11 +30,13 @@ video.addEventListener('play', ()=>{
     // @TODO - Create Smart AR ADs
     // var adImage = document.getElementById("ad")
     
-    var adImage // dummy holder
+    var adImage = document.createElement('img')
+    adImage.id = "adImage"
+    adCanvas.appendChild(adImage)
 
     setStartTime()
 
-    DetectFaces(adImage, displaySize, canvas);
+    DetectFaces(adImage, displaySize, canvas, adCanvasCtx);
 })
 
 // Creates and sets the Display Size for the FaceCanvas
@@ -49,12 +52,12 @@ function createFaceCanvas() {
 function createAdCanvas() {
     adCanvas = document.createElement("CANVAS");
     adCanvas.id = "adCanvas";
-    document.getElementById("videoDiv").appendChild(adCanvas);
+    document.getElementById("adDiv1").appendChild(adCanvas);
     return adCanvas
 }
 
 // Detects faces
-function DetectFaces(adImage, displaySize, canvas) 
+function DetectFaces(adImage, displaySize, canvas, adCanvasCtx) 
 {
 
     var canChange = true
@@ -75,7 +78,7 @@ function DetectFaces(adImage, displaySize, canvas)
 
         if (canChange) 
         {
-            //handleEmotion(detections, adImage);
+            handleEmotion(detections, adImage, adCanvasCtx);
             canChange = false;
         }
 
@@ -96,7 +99,7 @@ function drawDetections(detections, displaySize, canvas) {
 }
 
 // Detects emotion and changes picture accordingly
-function handleEmotion(detections, adImage)
+function handleEmotion(detections, adImage, adCanvasCtx)
 {
     
     if(detections[0]!=undefined)
@@ -107,19 +110,22 @@ function handleEmotion(detections, adImage)
 
         if(detections[0].expressions.happy >= 0.04)
         {
-            changeImage("/images/test2.jfif", adImage)
+            changeImage("/images/test2.jfif", adCanvasCtx, adImage)
         }
         else
         {
-            changeImage("/images/test1.jfif", adImage)
+            changeImage("/images/test1.jfif", adCanvasCtx, adImage)
         }
     }
 }
 
 // Changes Image
-function changeImage(imageLocation, adImage)
+function changeImage(imageLocation, adCanvasCtx, adImage)
 {
     adImage.src = imageLocation
+    adImage.height = 100
+    adImage.width = 200
+    adCanvasCtx.drawImage(adImage, 0, 0)
 }
 
 // Sets the start time for the timer
