@@ -20,23 +20,30 @@ function startVideo()
 // event listener that listens to the play event of the video 
 video.addEventListener('play', ()=>{
 
-    const adCanvas = createAdCanvas(); //  Creates the AdCanvas where Smart AR Advertisements will be displayed
-    var adCanvasCtx = adCanvas.getContext("2d")
-
     const { canvas, displaySize } = createFaceCanvas(); // Creates and sets the Display Size for the FaceCanvas
     
     faceapi.matchDimensions(canvas,displaySize)
 
     // @TODO - Create Smart AR ADs
-    // var adImage = document.getElementById("ad")
     
-    var adImage = document.createElement('img')
-    adImage.id = "adImage"
-    adCanvas.appendChild(adImage)
+    var adImages = []
+
+    for(let i=0; i<3; i++)
+    {
+        var adImage = document.createElement('img');
+        adImage.id = "adImage";
+        adImage.width = "100%";
+        adImage.height = "auto";
+        let id = "adDiv"+i;
+        document.getElementById(id.toString()).appendChild(adImage);
+        adImages.push(adImage);
+    }
+
+    
 
     setStartTime()
 
-    DetectFaces(adImage, displaySize, canvas, adCanvasCtx);
+    DetectFaces(adImages, displaySize, canvas);
 })
 
 // Creates and sets the Display Size for the FaceCanvas
@@ -48,16 +55,9 @@ function createFaceCanvas() {
     return { canvas, displaySize };
 }
 
-//  Creates the AdCanvas where Smart AR Advertisements will be displayed
-function createAdCanvas() {
-    adCanvas = document.createElement("CANVAS");
-    adCanvas.id = "adCanvas";
-    document.getElementById("adDiv1").appendChild(adCanvas);
-    return adCanvas
-}
 
 // Detects faces
-function DetectFaces(adImage, displaySize, canvas, adCanvasCtx) 
+function DetectFaces(adImages, displaySize, canvas) 
 {
 
     var canChange = true
@@ -78,7 +78,7 @@ function DetectFaces(adImage, displaySize, canvas, adCanvasCtx)
 
         if (canChange) 
         {
-            handleEmotion(detections, adImage, adCanvasCtx);
+            handleEmotion(detections, adImages);
             canChange = false;
         }
 
@@ -99,7 +99,7 @@ function drawDetections(detections, displaySize, canvas) {
 }
 
 // Detects emotion and changes picture accordingly
-function handleEmotion(detections, adImage, adCanvasCtx)
+function handleEmotion(detections, adImages)
 {
     
     if(detections[0]!=undefined)
@@ -110,22 +110,40 @@ function handleEmotion(detections, adImage, adCanvasCtx)
 
         if(detections[0].expressions.happy >= 0.04)
         {
-            changeImage("/images/test2.jfif", adCanvasCtx, adImage)
+            changeImage("/images/test2.jfif", adImages, 0, 700, 250)
         }
         else
         {
-            changeImage("/images/test1.jfif", adCanvasCtx, adImage)
+            changeImage("/images/test1.jfif", adImages, 0, 700, 250)
+        }
+
+        if(detections[0].gender === "male")
+        {
+            changeImage("/images/test5.gif", adImages, 2, 230, 230)
+        }
+        else
+        {
+            changeImage("", adImages, 2, 230, 230)
+        }
+
+        if(detections[0].age > 30)
+        {
+            changeImage("/images/test3.png", adImages, 1, 230, 230)
+        }
+        else
+        {
+            changeImage("", adImages, 1, 230, 230)
         }
     }
 }
 
 // Changes Image
-function changeImage(imageLocation, adCanvasCtx, adImage)
+function changeImage(imageLocation, adImages, bannerNo, height, width)
 {
-    adImage.src = imageLocation
-    adImage.height = 100
-    adImage.width = 200
-    adCanvasCtx.drawImage(adImage, 0, 0)
+    adImages[bannerNo].src = imageLocation
+    adImages[bannerNo].height = height
+    adImages[bannerNo].width =  width
+    
 }
 
 // Sets the start time for the timer
