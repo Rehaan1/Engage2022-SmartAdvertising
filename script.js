@@ -1,6 +1,6 @@
 const video = document.getElementById('video')
 
-var startTime, endTime
+var startTime, endTime, isHappy
 
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'), // Smaller version of Face Detector for better performance
@@ -70,7 +70,7 @@ function DetectFaces(adImages, displaySize, canvas)
             .withAgeAndGender();
 
         endTime = new Date();
-        if (endTime - startTime > 1000) 
+        if (endTime - startTime > 2000) 
         {
             canChange = true;
             setStartTime();
@@ -107,32 +107,42 @@ function handleEmotion(detections, adImages)
         console.log("AGE: "+detections[0].age)
         console.log("GENDER: "+detections[0].gender)
         console.log("Happy: "+detections[0].expressions.happy)
+        console.log(detections[0].expressions)
 
-        if(detections[0].expressions.happy >= 0.04)
+        if(detections[0].expressions.happy >= 0.001)
         {
-            changeImage("/images/test2.jfif", adImages, 0, 700, 250)
+            changeImage("/images/happy.png", adImages, 0, 700, 250)
+            changeImage("/images/boyhappy.png", adImages, 2, 300, 300)
+            isHappy = true
         }
         else
         {
-            changeImage("/images/test1.jfif", adImages, 0, 700, 250)
+            changeImage("/images/neutral.png", adImages, 0, 700, 250)
+            isHappy = false
         }
 
         if(detections[0].gender === "male")
         {
-            changeImage("/images/test5.gif", adImages, 2, 230, 230)
+            if(!isHappy)
+                changeImage("/images/boy.png", adImages, 2, 300, 300)
         }
         else
         {
-            changeImage("", adImages, 2, 230, 230)
+            if(!isHappy)
+                changeImage("/images/girl.png", adImages, 2, 300, 300)
         }
 
-        if(detections[0].age > 30)
+        if(detections[0].age > 27 && detections[0].age <= 40 )
         {
-            changeImage("/images/test3.png", adImages, 1, 230, 230)
+            changeImage("/images/30.png", adImages, 1, 300, 300)
+        }
+        else if(detections[0].age > 20 && detections[0].age <= 27)
+        {
+            changeImage("/images/20.png", adImages, 1, 300, 300)
         }
         else
         {
-            changeImage("", adImages, 1, 230, 230)
+            changeImage("/images/40.png", adImages, 1, 230, 230)
         }
     }
 }
