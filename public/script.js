@@ -3,11 +3,11 @@ const video = document.getElementById('video')
 var startTime, endTime, isHappy
 
 Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri('/models'), // Smaller version of Face Detector for better performance
-    faceapi.nets.faceLandmark68Net.loadFromUri('/models'), // Detects different parts of face - eyes, nose, mouth, etc
-    faceapi.nets.faceRecognitionNet.loadFromUri('/models'), // Detects Where the face is by boxing around it
-    faceapi.nets.faceExpressionNet.loadFromUri('/models'), //Recognizes Smile, Frown, Happy, Sad, etc
-    faceapi.nets.ageGenderNet.loadFromUri('/models')
+    faceapi.nets.tinyFaceDetector.loadFromUri('./models'), // Smaller version of Face Detector for better performance
+    faceapi.nets.faceLandmark68Net.loadFromUri('./models'), // Detects different parts of face - eyes, nose, mouth, etc
+    faceapi.nets.faceRecognitionNet.loadFromUri('./models'), // Detects Where the face is by boxing around it
+    faceapi.nets.faceExpressionNet.loadFromUri('./models'), //Recognizes Smile, Frown, Happy, Sad, etc
+    faceapi.nets.ageGenderNet.loadFromUri('./models')
 ]).then(startVideo) //Once all models loaded and resolved asynchronously then call startvideo
 
 
@@ -82,7 +82,7 @@ function DetectFaces(adImages, displaySize, canvas)
             canChange = false;
         }
 
-        drawDetections(detections, displaySize, canvas); 
+        // drawDetections(detections, displaySize, canvas); 
 
     }, 100);
 }
@@ -111,38 +111,38 @@ function handleEmotion(detections, adImages)
 
         if(detections[0].expressions.happy >= 0.001)
         {
-            changeImage("/images/happy.png", adImages, 0, 700, 250)
-            changeImage("/images/boyhappy.png", adImages, 2, 300, 300)
+            changeImage("./images/happy.png", adImages, 0, 700, 250)
+            changeImage("./images/boyhappy.png", adImages, 2, 300, 300)
             isHappy = true
         }
         else
         {
-            changeImage("/images/neutral.png", adImages, 0, 700, 250)
+            changeImage("./images/neutral.png", adImages, 0, 700, 250)
             isHappy = false
         }
 
         if(detections[0].gender === "male")
         {
             if(!isHappy)
-                changeImage("/images/boy.png", adImages, 2, 300, 300)
+                changeImage("./images/boy.png", adImages, 2, 300, 300)
         }
         else
         {
             if(!isHappy)
-                changeImage("/images/girl.png", adImages, 2, 300, 300)
+                changeImage("./images/girl.png", adImages, 2, 300, 300)
         }
 
         if(detections[0].age > 27 && detections[0].age <= 40 )
         {
-            changeImage("/images/30.png", adImages, 1, 300, 300)
+            changeImage("./images/30.png", adImages, 1, 300, 300)
         }
         else if(detections[0].age > 20 && detections[0].age <= 27)
         {
-            changeImage("/images/20.png", adImages, 1, 300, 300)
+            changeImage("./images/20.png", adImages, 1, 300, 300)
         }
         else
         {
-            changeImage("/images/40.png", adImages, 1, 230, 230)
+            changeImage("./images/40.png", adImages, 1, 300, 300)
         }
     }
 }
