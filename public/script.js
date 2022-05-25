@@ -113,7 +113,7 @@ function handleEmotion(detections, adImages)
             gender: detections[0].gender
         }
     
-        fetch('http://localhost:3000/data',{
+        fetch('https://rehaanengage2022.herokuapp.com/data',{
             method: "POST",
             body: JSON.stringify(_data),
             headers: {"Content-type": "application/json; charset=UTF-8"}
