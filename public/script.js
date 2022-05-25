@@ -39,21 +39,6 @@ video.addEventListener('play', ()=>{
         adImages.push(adImage);
     }
 
-    let _data = {
-        title: "foo",
-        body: "bar", 
-        userId:1
-    }
-
-    fetch('http://localhost:3000/test',{
-        method: "POST",
-        body: JSON.stringify(_data),
-        headers: {"Content-type": "application/json; charset=UTF-8"}
-    })
-    .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(err => console.log('RequestFailed',err));
-
     setStartTime()
 
     DetectFaces(adImages, displaySize, canvas);
@@ -121,6 +106,23 @@ function handleEmotion(detections, adImages)
         console.log("GENDER: "+detections[0].gender)
         console.log("Happy: "+detections[0].expressions.happy)
         console.log(detections[0].expressions)
+
+        // Send Data to Server for Storing for Data Analysis
+        let _data = {
+            age: detections[0].age,
+            gender: detections[0].gender
+        }
+    
+        fetch('http://localhost:3000/data',{
+            method: "POST",
+            body: JSON.stringify(_data),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+        })
+        .then(response => response.json())
+        .then(json => console.log(json))
+        .catch(err => console.log('RequestFailed',err));
+
+        // Handle Emotion Changes for Advertisement
 
         if(detections[0].expressions.happy >= 0.001)
         {
