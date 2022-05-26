@@ -25,9 +25,9 @@ Click the Link Below to go to the deployd app
 [Link to Deployed Application](https://rehaanengage2022.herokuapp.com/)
 ## Images
 
-![neutral face boy](image1.jpg)
-![happy face boy](image2.jpg)
-![analytics](image3.jpg)
+![neutral face boy](/assets/images/image1.jpg)
+![happy face boy](/assets/images/image2.jpg)
+![analytics](/assets/images/image3.jpg)
 ## Installation
 
 For Running Locally
