@@ -1,5 +1,5 @@
 require('dotenv').config()
-const path = require('path');
+const path = require('path')
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
@@ -10,10 +10,10 @@ const app = express()
 
 const port = process.env.PORT || 3000
 
-app.use(express.urlencoded({ extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 
 mongoose.connect(process.env.MONGODB_DB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(() => {
@@ -25,10 +25,10 @@ mongoose.connect(process.env.MONGODB_DB_URI, { useUnifiedTopology: true, useNewU
 
 app.use('/data', dataHandlingRoute)
 
-app.get('/',(req,res)=>{
-    res.sendFile('/public/index.html', {root: __dirname });
+app.get('/', (req, res) => {
+  res.sendFile('/public/index.html', { root: __dirname })
 })
 
-app.listen(port, ()=>{
-    console.log("listening on port 3000")
+app.listen(port, () => {
+  console.log('listening on port 3000')
 })
