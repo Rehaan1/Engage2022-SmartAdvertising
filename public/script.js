@@ -111,11 +111,11 @@ function handleEmotion (detections, adImages) {
     // Handle Emotion Changes for Advertisement
 
     if (detections[0].expressions.happy >= 0.001) {
-      changeImage('./images/happy.png', adImages, 0, 700, 250)
+      changeImage('./images/happy-final.webp', adImages, 0, 700, 250)
       changeImage('./images/boyhappy.png', adImages, 2, 300, 300)
       isHappy = true
     } else {
-      changeImage('./images/neutral.png', adImages, 0, 700, 250)
+      changeImage('./images/neutral-final.webp', adImages, 0, 700, 250)
       isHappy = false
     }
 
