@@ -25,6 +25,10 @@ mongoose.connect(process.env.MONGODB_DB_URI, { useUnifiedTopology: true, useNewU
 
 app.use('/data', dataHandlingRoute)
 
+app.get('/analytics',(req,res) => {
+  res.sendFile('/public/analytic.html', { root: __dirname })
+})
+
 app.get('/', (req, res) => {
   res.sendFile('/public/index.html', { root: __dirname })
 })

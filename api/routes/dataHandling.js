@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const AudienceModel = require('../../models/audienceModel')
 
-router.get('/analytics', (req, res) => {
+router.get('/analytics/getData', (req, res) => {
   console.log('Analytics Called')
 
   let audienceInfoObj
