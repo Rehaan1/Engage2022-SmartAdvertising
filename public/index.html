@@ -4,68 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Smart Ads - Rehaan</title>
     <script defer src ="face-api.min.js"></script>
     <script defer  src="script.js"></script>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-        }
-        #faceCanvas
-        {
-            z-index: 10;
-        }
-        #adCanvas
-        {
-            z-index: 20;
-            
-        }
-        #adImage
-        {
-            
-        }
-        .container 
-        {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .adDiv
-        {
-            position: absolute;
-            height: 300px;
-            width: 400px;  
-            left: 15px;
-            top: 10px;  
-        }
-        .adDiv2
-        {
-            position: absolute;
-            height: 300px;
-            width: 400px;  
-            left: 930px;
-            top: 406px;  
-        }
-        .adDiv3
-        {
-            position: absolute;
-            height: 300px;
-            width: 400px;  
-            left: 270px;
-            top: 2px;  
-        }
-    
-    </style>
-
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container" id="videoDiv">
@@ -77,6 +19,16 @@
         </div>
         <div class="adDiv3" id="adDiv2">
 
+        </div>
+        <div class="buttonDiv" id="buttonDiv">
+            <form action="/data/analytics" method="get">
+                <label for="sb">Audience Analytics</label>
+                <br>
+                <br>
+                <label for="sb">Get Audience Information for Smart Ad</label>
+                <br>
+                <input id="sb" type="submit" value="Click Here">
+            </form>
         </div>
         <video id="video" width="100%" height ="100%" autoplay muted></video>
     </div>

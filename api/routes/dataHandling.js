@@ -1,6 +1,14 @@
 const router = require('express').Router()
 const AudienceModel = require('../../models/audienceModel')
 
+
+router.get('/analytics',(req,res) => {
+    console.log("Analytics Called")
+    return res.status(200).json({
+        message:"success"
+    })
+})
+
 router.post('/',(req,res)=>{
     
     console.log(req.body)

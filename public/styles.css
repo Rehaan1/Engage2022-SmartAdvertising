@@ -1,0 +1,58 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+#faceCanvas
+{
+    z-index: 10;
+}
+#adCanvas
+{
+    z-index: 20;
+    
+}
+.container 
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.adDiv
+{
+    position: absolute;
+    height: 300px;
+    width: 400px;  
+    left: 15px;
+    top: 10px;  
+}
+.adDiv2
+{
+    position: absolute;
+    height: 300px;
+    width: 400px;  
+    left: 930px;
+    top: 406px;  
+}
+.adDiv3
+{
+    position: absolute;
+    height: 300px;
+    width: 400px;  
+    left: 270px;
+    top: 2px;  
+}
+.buttonDiv
+{
+    position: absolute;
+    left: 85%;
+    top: 5%;
+    z-index: 40;
+}
