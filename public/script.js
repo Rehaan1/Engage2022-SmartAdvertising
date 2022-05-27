@@ -19,6 +19,9 @@ function startVideo () {
 video.addEventListener('play', () => {
   const { canvas, displaySize } = createFaceCanvas() // Creates and sets the Display Size for the FaceCanvas
 
+  document.getElementById('videoNotice').innerHTML = ""
+  document.getElementById('videoWarning').innerHTML = ""
+
   faceapi.matchDimensions(canvas, displaySize)
 
   // @TODO - Create Smart AR ADs
@@ -88,11 +91,13 @@ function drawDetections (detections, displaySize, canvas) {
 // Detects emotion and changes picture accordingly
 function handleEmotion (detections, adImages) {
   if (detections[0] != undefined) {
+    document.getElementById('adWarning').innerHTML = ""
+    
     console.log('AGE: ' + detections[0].age)
     console.log('GENDER: ' + detections[0].gender)
     console.log('Happy: ' + detections[0].expressions.happy)
     console.log(detections[0].expressions)
-
+    
     // Send Data to Server for Storing for Data Analysis
     const _data = {
       age: detections[0].age,
